@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/animePosterGenerator/mainLayoutComponents/header";
 import Footer from "@/components/animePosterGenerator/mainLayoutComponents/footer";
 import { ThemeProvider } from "@/components/theme-provider/theme-provider";
+import StoreProvider from "./storeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,32 +21,34 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <>
-            <main className="flex flex-col h-screen">
-              <div className="flex flex-1 overflow-hidden">
-                <div className="flex flex-1 flex-col">
-                  <div className="flex items-center h-16 p-4">
-                    <div className="w-full">
-                      <Header />
+        <StoreProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <>
+              <main className="flex flex-col h-screen">
+                <div className="flex flex-1 overflow-hidden">
+                  <div className="flex flex-1 flex-col">
+                    <div className="flex items-center h-16 p-4">
+                      <div className="w-full">
+                        <Header />
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex flex-1 overflow-y-auto paragraph p-4">
-                    <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
-                      {children}
+                    <div className="flex flex-1 overflow-y-auto paragraph p-4">
+                      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
+                        {children}
+                      </div>
                     </div>
+                    <div className="my-2"></div>
                   </div>
-                  <div className="my-2"></div>
                 </div>
-              </div>
-              <div className="flex">
-                <div className="w-full">
-                  <Footer />
+                <div className="flex">
+                  <div className="w-full">
+                    <Footer />
+                  </div>
                 </div>
-              </div>
-            </main>
-          </>
-        </ThemeProvider>
+              </main>
+            </>
+          </ThemeProvider>
+        </StoreProvider>
       </body>
     </html>
   );
