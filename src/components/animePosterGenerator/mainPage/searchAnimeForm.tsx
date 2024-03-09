@@ -7,6 +7,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   q: z.string().min(1),
@@ -20,8 +21,10 @@ export function SearchAnimeForm() {
     },
   });
 
+  const router = useRouter();
+
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+    router.push(`/search?q=${values.q}`);
   }
 
   return (
