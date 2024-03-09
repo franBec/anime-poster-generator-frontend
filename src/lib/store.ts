@@ -1,6 +1,5 @@
-import { combineReducers, configureStore, EnhancedStore, Reducer, UnknownAction } from '@reduxjs/toolkit'
+import { combineReducers, configureStore, Reducer, UnknownAction } from '@reduxjs/toolkit'
 import { jikanClient } from '@/clients/jikanClient'
-
 
 const combinedReducer = combineReducers({
     [jikanClient.reducerPath]: jikanClient.reducer
@@ -12,11 +11,6 @@ const rootReducer: Reducer = (state: RootState, action: UnknownAction) => {
     }
     return combinedReducer(state, action)
 }
-
-/* export const store: EnhancedStore = configureStore({
-    reducer: rootReducer,
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(jikanClient.middleware)
-}) */
 
 export const makeStore = () => {
     return configureStore({
