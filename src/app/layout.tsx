@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/animePosterGenerator/mainLayoutComponents/header";
-import Footer from "@/components/animePosterGenerator/mainLayoutComponents/footer";
+import Header from "@/components/animePosterGenerator/layout/header";
+import Footer from "@/components/animePosterGenerator/layout/footer";
 import { ThemeProvider } from "@/components/theme-provider/theme-provider";
 import StoreProvider from "./storeProvider";
 

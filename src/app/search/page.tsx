@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchAnimeForm } from "@/components/animePosterGenerator/mainPage/searchAnimeForm";
+import { SearchAnimeForm } from "@/components/animePosterGenerator/searchAnimeForm";
 import { useSearchParams } from "next/navigation";
 import React from "react";
 import { useGetAnimeSearchQuery } from "../../../generated/rtk-query/jikanApi";
