@@ -4,6 +4,7 @@ import { SearchAnimeForm } from "@/components/animePosterGenerator/searchAnimeFo
 import { useSearchParams } from "next/navigation";
 import React from "react";
 import { useGetAnimeSearchQuery } from "../../../generated/rtk-query/jikanApi";
+import Loading from "@/components/animePosterGenerator/layout/loading";
 
 const SearchPage = () => {
   const searchParams = useSearchParams();
@@ -15,7 +16,7 @@ const SearchPage = () => {
   );
 
   if (isLoading) {
-    return <p>loading...</p>;
+    return <Loading />;
   }
 
   if (isError || !data) {
