@@ -6,7 +6,7 @@ const SkeletonWithImage = ({
   alt,
 }: {
   src: string | null | undefined;
-  alt: string | undefined;
+  alt: string;
 }) => {
   if (!src) {
     return (
@@ -17,7 +17,7 @@ const SkeletonWithImage = ({
     <div className="flex flex-1 w-full h-full min-h-[6rem] max-h-[9rem] rounded-xl overflow-hidden">
       <Image
         src={src}
-        alt={alt || "Content"}
+        alt={alt}
         width={250}
         height={250}
         className="object-cover w-full h-full"

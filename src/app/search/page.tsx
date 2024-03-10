@@ -8,6 +8,7 @@ import Loading from "@/components/animePosterGenerator/layout/loading";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import SkeletonWithImage from "@/components/ui/skeleton-with-image";
 import Link from "next/link";
+import { AlertDestructive } from "@/components/animePosterGenerator/layout/alertDestructive";
 
 const SearchPage = () => {
   const trim = (largeString: string | null | undefined, maxLength: number) => {
@@ -22,7 +23,7 @@ const SearchPage = () => {
   const searchParams = useSearchParams();
   const q = searchParams.get("q") || "";
 
-  const { data, isLoading, isError } = useGetAnimeSearchQuery(
+  const { data, isLoading, isError, error } = useGetAnimeSearchQuery(
     { q },
     { skip: !q }
   );
@@ -32,7 +33,9 @@ const SearchPage = () => {
   }
 
   if (isError || !data) {
-    return <p>failed to load</p>;
+    return (
+      <AlertDestructive alertDescription={JSON.stringify(error, null, 2)} />
+    );
   }
 
   return (
@@ -47,7 +50,7 @@ const SearchPage = () => {
               header={
                 <SkeletonWithImage
                   src={anime.images?.jpg?.image_url}
-                  alt={anime.title}
+                  alt={anime.title || "anime image"}
                 />
               }
             />
