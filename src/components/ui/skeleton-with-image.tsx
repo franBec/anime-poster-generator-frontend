@@ -14,7 +14,7 @@ const SkeletonWithImage = ({
     );
   }
   return (
-    <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden">
+    <div className="flex flex-1 w-full h-full min-h-[6rem] max-h-[9rem] rounded-xl overflow-hidden">
       <Image
         src={src}
         alt={alt || "Content"}
