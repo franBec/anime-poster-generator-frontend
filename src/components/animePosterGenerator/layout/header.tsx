@@ -7,7 +7,7 @@ const Header = () => {
     <div className="flex justify-between items-center">
       <div>
         <Link type="button" href={"/"}>
-          <h1 className="text-xl font-bold ">Anime Poster Generator</h1>
+          <h1 className="text-3xl ">Anime Poster Generator</h1>
         </Link>
       </div>
       <div>
