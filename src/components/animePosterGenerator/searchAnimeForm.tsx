@@ -8,8 +8,14 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { GetAnimeSearchApiArg } from "../../../generated/rtk-query/jikanApi";
 
-export function SearchAnimeForm() {
-  const form = useForm<GetAnimeSearchApiArg>();
+export function SearchAnimeForm({
+  getAnimeSearchApiArg,
+}: {
+  getAnimeSearchApiArg: GetAnimeSearchApiArg;
+}) {
+  const form = useForm<GetAnimeSearchApiArg>({
+    defaultValues: getAnimeSearchApiArg,
+  });
 
   const router = useRouter();
 
