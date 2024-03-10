@@ -35,4 +35,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+#generated code by rtk-query
 /generated
+generateRtkQueryCode.js
