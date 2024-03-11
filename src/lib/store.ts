@@ -1,8 +1,10 @@
 import { combineReducers, configureStore, Reducer, UnknownAction } from '@reduxjs/toolkit'
 import { jikanClient } from '@/clients/jikanClient'
+import { animePosterGeneratorBackendClient } from '@/clients/animePosterGeneratorBackendClient'
 
 const combinedReducer = combineReducers({
-    [jikanClient.reducerPath]: jikanClient.reducer
+    [jikanClient.reducerPath]: jikanClient.reducer,
+    [animePosterGeneratorBackendClient.reducerPath]: animePosterGeneratorBackendClient.reducer
 })
 
 const rootReducer: Reducer = (state: RootState, action: UnknownAction) => {
@@ -15,7 +17,9 @@ const rootReducer: Reducer = (state: RootState, action: UnknownAction) => {
 export const makeStore = () => {
     return configureStore({
         reducer: rootReducer,
-        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(jikanClient.middleware)
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware()
+            .concat(jikanClient.middleware)
+            .concat(animePosterGeneratorBackendClient.middleware)
     })
 }
 

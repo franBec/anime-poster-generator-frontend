@@ -26,25 +26,10 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
     },
   });
 
-  const [makePoster, { isLoading }] = useMakePosterMutation();
+  const [makePoster] = useMakePosterMutation();
 
   const onSubmit: SubmitHandler<MakePosterApiArg> = async (data) => {
-    try {
-      const poster = await makePoster(data).unwrap();
-
-      if (poster instanceof Blob) {
-        const url = window.URL.createObjectURL(poster);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "poster.png";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      }
-    } catch (error) {
-      console.error("Error downloading the poster:", error);
-    }
+    await makePoster(data).unwrap();
   };
 
   return (
