@@ -33,7 +33,7 @@ export default function RootLayout({
                       </div>
                     </div>
                     <div className="flex flex-1 overflow-y-auto paragraph p-4">
-                      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6">
+                      <div className="w-full mx-auto px-4 sm:px-6">
                         {children}
                       </div>
                     </div>

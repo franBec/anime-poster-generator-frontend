@@ -41,7 +41,7 @@ const SearchPage = () => {
   return (
     <div className="grid gap-4">
       <SearchAnimeForm getAnimeSearchApiArg={{ q }} />
-      <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem]">
+      <BentoGrid className=" mx-auto md:auto-rows-[20rem]">
         {data.data?.map((anime) => (
           <Link key={anime.mal_id} href={`anime/${anime.mal_id}`}>
             <BentoGridItem

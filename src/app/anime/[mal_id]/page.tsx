@@ -7,6 +7,7 @@ import { useGetAnimeFullByIdQuery } from "../../../../generated/rtk-query/jikanA
 import Loading from "@/components/animePosterGenerator/layout/loading";
 import { AlertDestructive } from "@/components/animePosterGenerator/layout/alertDestructive";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 
 const AnimeDetails = () => {
   const params = useParams<{ mal_id: string }>();
@@ -34,15 +35,15 @@ const AnimeDetails = () => {
   }
   return (
     <>
-      <section className="body-font overflow-hidden">
+      <section className="overflow-hidden">
         <div className="container mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
             <Image
               alt={data.data?.title || "anime image"}
-              width={500}
-              height={500}
+              width={1024}
+              height={1024}
               className="lg:w-1/2 w-full object-cover object-center rounded border"
-              src={data.data?.images?.jpg?.image_url}
+              src={data.data?.images?.jpg?.large_image_url}
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className=" text-3xl title-font font-medium mb-1">
@@ -59,7 +60,9 @@ const AnimeDetails = () => {
               <p className="leading-relaxed">{data.data?.synopsis}</p>
               <div className="mt-6 items-center pb-5 border-b-2 border-primary mb-5"></div>
               <div>
-                <Button />
+                <Link href={"/poster"}>
+                  <Button>Make poster</Button>
+                </Link>
               </div>
             </div>
           </div>
