@@ -1,6 +1,6 @@
 import type { ConfigFile } from '@rtk-query/codegen-openapi';
 
-const baseName = 'jikan';
+const baseName = 'animePosterGeneratorBackend';
 
 const config: ConfigFile = {
     schemaFile: `./${baseName}.yaml`,

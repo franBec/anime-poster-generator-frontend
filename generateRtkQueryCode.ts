@@ -1,29 +1,43 @@
-import { existsSync, mkdirSync, writeFileSync } from 'fs';
+import { existsSync, mkdirSync, writeFileSync, readdirSync, unlinkSync } from 'fs';
 import { exec } from 'child_process';
+import { join } from 'path';
 
-// Define the directory and file path
-const directoryPath = './generated/rtk-query';
-const filePath = `${directoryPath}/jikanApi.ts`;
+const preProcessApi = () => {
+    const directoryPath = './generated/rtk-query';
 
-// Check if the directory exists, if not, create it
-if (!existsSync(directoryPath)) {
-    mkdirSync(directoryPath, { recursive: true });
-    console.log(`Directory created at: ${directoryPath}`);
-}
+    if (existsSync(directoryPath)) {
+        const files = readdirSync(directoryPath);
 
-// If the file exists, empty its contents; if not, create it
-writeFileSync(filePath, '');
-console.log(`File contents cleared at: ${filePath}`);
-
-// Define your command
-const command = 'npx @rtk-query/codegen-openapi ./src/schemas/openapi/jikan-config.ts';
-
-// Execute the command
-exec(command, (error, stdout, stderr) => {
-    if (error) {
-        console.error(`exec error: ${error}`);
-        return;
+        for (const file of files) {
+            unlinkSync(join(directoryPath, file));
+        }
+        console.log(`All files cleared in: ${directoryPath}`);
+    } else {
+        mkdirSync(directoryPath, { recursive: true });
+        console.log(`Directory created at: ${directoryPath}`);
     }
-    console.log(`stdout: ${stdout}`);
-    console.error(`stderr: ${stderr}`);
+};
+
+const processApi = (apiName: string) => {
+    const directoryPath = './generated/rtk-query';
+    const filePath = `${directoryPath}/${apiName}Api.ts`;
+
+    writeFileSync(filePath, '');
+
+    const command = `npx @rtk-query/codegen-openapi ./src/schemas/openapi/${apiName}-config.ts`;
+
+    exec(command, (error, stdout, stderr) => {
+        if (error) {
+            console.error(`exec error: ${error}`);
+            return;
+        }
+        console.log(`stdout: ${stdout}`);
+        console.error(`stderr: ${stderr}`);
+    });
+};
+
+preProcessApi();
+const apiNames = ['jikan', 'animePosterGeneratorBackend'];
+apiNames.forEach(apiName => {
+    processApi(apiName);
 });
