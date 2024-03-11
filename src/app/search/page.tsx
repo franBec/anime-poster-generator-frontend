@@ -43,8 +43,9 @@ const SearchPage = () => {
       <SearchAnimeForm getAnimeSearchApiArg={{ q }} />
       <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem]">
         {data.data?.map((anime) => (
-          <Link key={anime.mal_id} href={`anime/${anime.mal_id}`} type="">
+          <Link key={anime.mal_id} href={`anime/${anime.mal_id}`}>
             <BentoGridItem
+              key={anime.mal_id}
               title={trim(anime.title, 50)}
               description={trim(anime.synopsis, 150)}
               header={

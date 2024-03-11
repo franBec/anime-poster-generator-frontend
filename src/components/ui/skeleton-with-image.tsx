@@ -18,9 +18,9 @@ const SkeletonWithImage = ({
       <Image
         src={src}
         alt={alt}
-        width={250}
-        height={250}
-        className="object-cover w-full h-full"
+        width={144}
+        height={144}
+        className=" w-full h-full"
       />
     </div>
   );
