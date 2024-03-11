@@ -1,13 +1,11 @@
 "use client";
 
-import {
-  MakePosterApiArg,
-  useMakePosterMutation,
-} from "../../../generated/rtk-query/animePosterGeneratorBackendApi";
+import { MakePosterApiArg } from "../../../generated/rtk-query/animePosterGeneratorBackendApi";
 import { AnimeFull } from "../../../generated/rtk-query/jikanApi";
 import { Button } from "../ui/button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Form } from "../ui/form";
+import { useMakePosterAsBlobMutation } from "@/clients/animePosterGeneratorBackendClient";
 
 const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
   const image64 =
@@ -26,10 +24,10 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
     },
   });
 
-  const [makePoster] = useMakePosterMutation();
+  const [makePosterAsBlob] = useMakePosterAsBlobMutation();
 
-  const onSubmit: SubmitHandler<MakePosterApiArg> = async (data) => {
-    await makePoster(data).unwrap();
+  const onSubmit: SubmitHandler<MakePosterApiArg> = (makePosterApiArg) => {
+    makePosterAsBlob(makePosterApiArg);
   };
 
   return (
