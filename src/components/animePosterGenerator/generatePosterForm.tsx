@@ -99,15 +99,25 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
     animeStuff.data.find((person) => person.positions?.includes("Director"))
       ?.person?.name || ""
   );
-
   if (anime.studios) {
     form.setValue(
-      "posterContent.producers",
+      "posterContent.studios",
       anime.studios
         .filter(
           (studio): studio is { name: string } => studio.name !== undefined
         )
         .map((studio) => studio.name) as string[]
+    );
+  }
+  if (anime.producers) {
+    form.setValue(
+      "posterContent.producers",
+      anime.producers
+        .filter(
+          (producer): producer is { name: string } =>
+            producer.name !== undefined
+        )
+        .map((producer) => producer.name) as string[]
     );
   }
 

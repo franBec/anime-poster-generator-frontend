@@ -7,7 +7,7 @@ info:
     name: Pollito
     url: https://pollitodev.netlify.app/
 servers:
-  - url: 'http://localhost:8080'
+  - url: "http://localhost:8080"
 paths:
   /poster:
     post:
@@ -20,9 +20,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PosterContent'
+              $ref: "#/components/schemas/PosterContent"
       responses:
-        '200':
+        "200":
           description: Poster in PDF file
           content:
             application/pdf:
@@ -34,7 +34,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: "#/components/schemas/Error"
 components:
   schemas:
     PosterContent:
@@ -51,6 +51,10 @@ components:
         director:
           type: string
         producers:
+          type: array
+          items:
+            type: string
+        studios:
           type: array
           items:
             type: string
