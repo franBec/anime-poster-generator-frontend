@@ -19,17 +19,20 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
 
   useEffect(() => {
     const fetchImageBase64 = async () => {
-      const imageUrl =
-        "https://cdn.myanimelist.net/images/anime/1470/137929l.jpg";
-      try {
-        setImageBase64((await imageUrlToBase64(imageUrl)) as string);
-      } catch (error) {
-        console.error("Error converting image to Base64", error);
+      const imageUrl = anime.images?.jpg?.large_image_url;
+      if (imageUrl) {
+        try {
+          setImageBase64((await imageUrlToBase64(imageUrl)) as string);
+        } catch (error) {
+          console.error("Error converting image to Base64", error);
+        }
       }
     };
 
-    fetchImageBase64();
-  }, []);
+    if (anime.images?.jpg?.large_image_url) {
+      fetchImageBase64();
+    }
+  }, [anime.images?.jpg?.large_image_url]);
 
   const form = useForm<MakePosterApiArg>({
     defaultValues: {
