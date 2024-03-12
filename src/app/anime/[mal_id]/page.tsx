@@ -7,6 +7,8 @@ import Loading from "@/components/animePosterGenerator/layout/loading";
 import { AlertDestructive } from "@/components/animePosterGenerator/layout/alertDestructive";
 import { useParams } from "next/navigation";
 import GeneratePosterForm from "@/components/animePosterGenerator/generatePosterForm";
+import { ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 const AnimeDetails = () => {
   const params = useParams<{ mal_id: string }>();
@@ -27,10 +29,14 @@ const AnimeDetails = () => {
     return <Loading />;
   }
 
-  if (isError || !data || !data.data) {
+  if (isError || !data) {
     return (
       <AlertDestructive alertDescription={JSON.stringify(error, null, 2)} />
     );
+  }
+
+  if (!data.data) {
+    return <AlertDestructive alertDescription={`Anime ${id} not found`} />;
   }
   return (
     <section className="overflow-hidden">
@@ -43,22 +49,58 @@ const AnimeDetails = () => {
             className="lg:w-1/2 w-full object-cover object-center rounded border"
             src={
               data.data.images?.jpg?.large_image_url ||
-              "https://placehold.co/400x600"
+              "https://placehold.co/400x600.png"
             }
           />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className=" text-3xl title-font font-medium mb-1">
-              {data.data?.title}
+              {data.data.title}
             </h2>
-            <div className="flex mb-4">
-              <span className="flex items-center">
-                <span className=" ml-3">4 Reviews</span>
-              </span>
-              <span className="flex ml-3 pl-3 py-2 border-l-2">
-                <span className=" ml-3">My anime list page</span>
-              </span>
+            <div className="flex space-x-3 mb-4 items-center">
+              <div className="flex flex-col items-center">
+                <div>
+                  <span>Score</span>
+                </div>
+                <div>
+                  <span className="font-bold">{data.data.score}</span>
+                </div>
+              </div>
+              <div>
+                <span className="text-5xl">·</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div>
+                  <span>Ranked</span>
+                </div>
+                <div>
+                  <span className="font-bold">#{data.data.rank}</span>
+                </div>
+              </div>
+              <div>
+                <span className="text-5xl">·</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div>
+                  <span>Popularity</span>
+                </div>
+                <div>
+                  <span className="font-bold">#{data.data.popularity}</span>
+                </div>
+              </div>
+              {data.data.url && (
+                <>
+                  <div>
+                    <span className="text-5xl">·</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <Link href={data.data.url}>
+                      <ExternalLink strokeWidth={2} />
+                    </Link>
+                  </div>
+                </>
+              )}
             </div>
-            <p className="leading-relaxed">{data.data?.synopsis}</p>
+            <p className="leading-relaxed">{data.data.synopsis}</p>
             <div className="mt-6 items-center pb-5 border-b-2 border-primary mb-5"></div>
             <GeneratePosterForm anime={data.data} />
           </div>
