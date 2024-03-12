@@ -15,15 +15,14 @@ import { imageUrlToBase64 } from "@/lib/imageUrlToBase64";
 import { useState, useEffect } from "react";
 
 const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
-  const [formFieldValue, setFormFieldValue] = useState("");
+  const [imageBase64, setImageBase64] = useState("");
 
   useEffect(() => {
     const fetchImageBase64 = async () => {
       const imageUrl =
         "https://cdn.myanimelist.net/images/anime/1470/137929l.jpg";
       try {
-        const base64Image = (await imageUrlToBase64(imageUrl)) as string;
-        setFormFieldValue(base64Image);
+        setImageBase64((await imageUrlToBase64(imageUrl)) as string);
       } catch (error) {
         console.error("Error converting image to Base64", error);
       }
@@ -84,13 +83,13 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
     );
   }
 
-  if (!formFieldValue) {
+  if (!imageBase64) {
     <AlertDestructive alertDescription={"Not able to get base 64 image"} />;
   }
 
   form.setValue(
     "posterContent.image",
-    formFieldValue.replace("data:image/jpeg;base64,", "")
+    imageBase64.replace("data:image/jpeg;base64,", "")
   );
   form.setValue(
     "posterContent.director",
