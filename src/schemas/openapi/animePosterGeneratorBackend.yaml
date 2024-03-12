@@ -67,6 +67,7 @@ components:
         - genres
         - director
         - producers
+        - studios
         - image
     Error:
       type: object
