@@ -44,12 +44,11 @@ const GenerateWithCustomImage = ({
             "data:image/jpeg;base64,",
             ""
           );
+          makePosterAsBlob(makePosterApiArg);
         }
       };
       reader.readAsDataURL(file);
     }
-    console.log(makePosterApiArg);
-    makePosterAsBlob(makePosterApiArg);
   };
 
   return (
