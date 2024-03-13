@@ -6,7 +6,7 @@ import { useGetAnimeFullByIdQuery } from "../../../../generated/rtk-query/jikanA
 import Loading from "@/components/animePosterGenerator/layout/loading";
 import { AlertDestructive } from "@/components/animePosterGenerator/layout/alertDestructive";
 import { useParams } from "next/navigation";
-import GeneratePosterForm from "@/components/animePosterGenerator/generatePosterForm";
+import GeneratePosterForm from "@/components/animePosterGenerator/anime/mal_id/generatePosterForm";
 import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 
@@ -93,7 +93,7 @@ const AnimeDetails = () => {
                     <span className="text-5xl">·</span>
                   </div>
                   <div className="flex flex-col items-center">
-                    <Link href={data.data.url}>
+                    <Link href={data.data.url} target="_blank">
                       <ExternalLink strokeWidth={2} />
                     </Link>
                   </div>

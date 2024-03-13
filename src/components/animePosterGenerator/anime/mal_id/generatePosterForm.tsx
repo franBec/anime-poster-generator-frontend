@@ -1,27 +1,25 @@
 "use client";
 
-import { MakePosterApiArg } from "../../../generated/rtk-query/animePosterGeneratorBackendApi";
 import {
   AnimeFull,
   useGetAnimeStaffQuery,
-} from "../../../generated/rtk-query/jikanApi";
-import { Button } from "../ui/button";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { Form } from "../ui/form";
-import { useMakePosterAsBlobMutation } from "@/clients/animePosterGeneratorBackendClient";
-import Loading from "./layout/loading";
-import { AlertDestructive } from "./layout/alertDestructive";
+} from "../../../../../generated/rtk-query/jikanApi";
+import Loading from "../../layout/loading";
+import { AlertDestructive } from "../../layout/alertDestructive";
 import { imageUrlToBase64 } from "@/lib/imageUrlToBase64";
 import { useState, useEffect } from "react";
+import GenerateWithDefaultImage from "./generateWithDefaultImage";
+import GenerateWithCustomImage from "./generateWithCustomImage";
 
 const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
-  const [imageBase64, setImageBase64] = useState<string>();
+  const [image, setImage] = useState<string>();
   useEffect(() => {
     const fetchImageBase64 = async () => {
       const imageUrl = anime.images?.jpg?.large_image_url;
       if (imageUrl) {
         try {
-          setImageBase64((await imageUrlToBase64(imageUrl)) as string);
+          const imageInBase64 = (await imageUrlToBase64(imageUrl)) as string;
+          setImage(imageInBase64.replace("data:image/jpeg;base64,", ""));
         } catch (error) {
           console.error("Error converting image to Base64", error);
         }
@@ -32,12 +30,6 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
       fetchImageBase64();
     }
   }, [anime.images?.jpg?.large_image_url]);
-
-  const form = useForm<MakePosterApiArg>();
-  const [makePosterAsBlob] = useMakePosterAsBlobMutation();
-  const onSubmit: SubmitHandler<MakePosterApiArg> = (makePosterApiArg) => {
-    makePosterAsBlob(makePosterApiArg);
-  };
 
   let id: number;
   if (anime.mal_id) {
@@ -80,23 +72,12 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
     );
   }
 
-  if (!imageBase64) {
-    return (
-      <AlertDestructive alertDescription={"Not able to get image for poster"} />
-    );
-  }
-  form.setValue(
-    "posterContent.image",
-    imageBase64.replace("data:image/jpeg;base64,", "")
-  );
-
   const title = anime.title;
   if (!title) {
     return (
       <AlertDestructive alertDescription={"Not able to get title for poster"} />
     );
   }
-  form.setValue("posterContent.title", title);
 
   const year = anime.year;
   if (!year) {
@@ -104,7 +85,6 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
       <AlertDestructive alertDescription={"Not able to get year for poster"} />
     );
   }
-  form.setValue("posterContent.year", year);
 
   if (!anime.genres) {
     return (
@@ -123,7 +103,6 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
       />
     );
   }
-  form.setValue("posterContent.genres", genres);
 
   const director = animeStaff.data.find((person) =>
     person.positions?.includes("Director")
@@ -135,7 +114,6 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
       />
     );
   }
-  form.setValue("posterContent.director", director);
 
   if (!anime.studios) {
     return (
@@ -147,7 +125,6 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
   const studios = anime.studios
     .filter((studio): studio is { name: string } => studio.name !== undefined)
     .map((studio) => studio.name) as string[];
-  form.setValue("posterContent.studios", studios);
   if (!studios.length) {
     return (
       <AlertDestructive
@@ -175,15 +152,36 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
       />
     );
   }
-  form.setValue("posterContent.producers", producers);
 
   return (
     <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <Button type="submit">Generate poster</Button>
-        </form>
-      </Form>
+      <div>
+        {image && (
+          <GenerateWithDefaultImage
+            posterContent={{
+              director,
+              genres,
+              image,
+              producers,
+              studios,
+              title,
+              year,
+            }}
+          />
+        )}
+      </div>
+      <div>
+        <GenerateWithCustomImage
+          posterContentWithoutImage={{
+            director,
+            genres,
+            producers,
+            studios,
+            title,
+            year,
+          }}
+        />
+      </div>
     </>
   );
 };
