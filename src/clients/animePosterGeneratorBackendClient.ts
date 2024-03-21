@@ -3,7 +3,7 @@ import { MakePosterApiArg, MakePosterApiResponse } from '../../generated/rtk-que
 
 export const animePosterGeneratorBackendClient = createApi({
     reducerPath: "animePosterGeneratorBackendClient",
-    baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:8080' }),
+    baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_ANIME_POSTER_GENERATOR_BACKEND_BASE_URL }),
     endpoints: () => ({}),
 })
 
