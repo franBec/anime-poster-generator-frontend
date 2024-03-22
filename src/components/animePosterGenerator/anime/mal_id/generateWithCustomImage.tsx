@@ -55,9 +55,8 @@ const GenerateWithCustomImage = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label htmlFor="picture">Generate with your own picture!</Label>
           <Input {...form.register("fileList")} id="picture" type="file" />
-          <Button type="submit">Generate Poster with custom image</Button>
+          <Button type="submit">Generate Poster</Button>
         </div>
       </form>
     </Form>

@@ -10,6 +10,7 @@ import { imageUrlToBase64 } from "@/lib/imageUrlToBase64";
 import { useState, useEffect } from "react";
 import GenerateWithDefaultImage from "./generateWithDefaultImage";
 import GenerateWithCustomImage from "./generateWithCustomImage";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
   const [image, setImage] = useState<string>();
@@ -154,36 +155,42 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
   }
 
   return (
-    <div className="flex">
-      <div>
+    <div className="flex justify-center">
+      <Tabs defaultValue="defaultImage" className="">
+        <TabsList>
+          {image && (
+            <TabsTrigger value="defaultImage">Default Image</TabsTrigger>
+          )}
+          <TabsTrigger value="customImage">Custom Image</TabsTrigger>
+        </TabsList>
         {image && (
-          <GenerateWithDefaultImage
-            posterContent={{
+          <TabsContent value="defaultImage">
+            <GenerateWithDefaultImage
+              posterContent={{
+                director,
+                genres,
+                image,
+                producers,
+                studios,
+                title,
+                year,
+              }}
+            />
+          </TabsContent>
+        )}
+        <TabsContent value="customImage">
+          <GenerateWithCustomImage
+            posterContentWithoutImage={{
               director,
               genres,
-              image,
               producers,
               studios,
               title,
               year,
             }}
           />
-        )}
-      </div>
-      {/* <div className="mt-6 pb-5 border-b-2 border-secondary mb-5"></div> */}
-
-      <div>
-        <GenerateWithCustomImage
-          posterContentWithoutImage={{
-            director,
-            genres,
-            producers,
-            studios,
-            title,
-            year,
-          }}
-        />
-      </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

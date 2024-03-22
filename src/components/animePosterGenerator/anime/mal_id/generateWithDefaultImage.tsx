@@ -21,7 +21,9 @@ const GenerateWithDefaultImage = ({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <Button type="submit">Generate Poster</Button>
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Button type="submit">Generate Poster</Button>
+        </div>
       </form>
     </Form>
   );
