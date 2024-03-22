@@ -154,7 +154,7 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
   }
 
   return (
-    <>
+    <div className="flex">
       <div>
         {image && (
           <GenerateWithDefaultImage
@@ -170,6 +170,8 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
           />
         )}
       </div>
+      {/* <div className="mt-6 pb-5 border-b-2 border-secondary mb-5"></div> */}
+
       <div>
         <GenerateWithCustomImage
           posterContentWithoutImage={{
@@ -182,7 +184,7 @@ const GeneratePosterForm = ({ anime }: { anime: AnimeFull }) => {
           }}
         />
       </div>
-    </>
+    </div>
   );
 };
 
