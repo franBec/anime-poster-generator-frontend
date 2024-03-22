@@ -6,7 +6,6 @@ import React from "react";
 import { useGetAnimeSearchQuery } from "../../../generated/rtk-query/jikanApi";
 import Loading from "@/components/animePosterGenerator/layout/loading";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
-import SkeletonWithImage from "@/components/ui/skeleton-with-image";
 import Link from "next/link";
 import { AlertDestructive } from "@/components/animePosterGenerator/layout/alertDestructive";
 
@@ -49,10 +48,16 @@ const SearchPage = () => {
               title={trim(anime.title, 50)}
               description={trim(anime.synopsis, 150)}
               header={
-                <SkeletonWithImage
-                  src={anime.images?.jpg?.image_url}
-                  alt={anime.title || "anime image"}
-                />
+                <div className="flex flex-1 w-full h-full min-h-[6rem] max-h-[11rem] rounded-xl justify-center">
+                  <img
+                    src={
+                      anime.images?.jpg?.large_image_url ||
+                      "https://placehold.co/600x400.png"
+                    }
+                    alt="placeholder"
+                    className="overflow-hidden object-cover"
+                  />
+                </div>
               }
             />
           </Link>
