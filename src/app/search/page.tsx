@@ -8,31 +8,31 @@ import {
   useGetAnimeSearchQuery,
 } from "../../../generated/rtk-query/jikanApi";
 import Loading from "@/components/animePosterGenerator/layout/loading";
-import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
-import Link from "next/link";
 import { AlertDestructive } from "@/components/animePosterGenerator/layout/alertDestructive";
+import AnimeBentoGrid from "@/components/animePosterGenerator/search/animeBentoGrid";
+import PaginationAnimeSearch from "@/components/animePosterGenerator/search/paginationAnimeSearch";
 
 const SearchPage = () => {
-  const trim = (largeString: string | null | undefined, maxLength: number) => {
-    if (!largeString) return "";
+  const searchParams = useSearchParams();
 
-    if (largeString.length > maxLength) {
-      return `${largeString.substring(0, maxLength)}...`;
-    }
-    return largeString;
+  const getAnimeSearchApiArg = {
+    q: searchParams.get("q") || "",
+    sort: (searchParams.get("sort") || "desc") as SearchQuerySort,
+    orderBy: (searchParams.get("orderBy") ||
+      "score") as AnimeSearchQueryOrderby,
+    limit: 9,
+    page: Number(searchParams.get("page")) || 1,
   };
 
-  const searchParams = useSearchParams();
-  const q = searchParams.get("q") || "";
-  const sort = (searchParams.get("sort") || "desc") as SearchQuerySort;
-  const orderBy = (searchParams.get("orderBy") ||
-    "score") as AnimeSearchQueryOrderby;
-  const limit = 9;
-  const page = Number(searchParams.get("page")) || 1;
-
   const { data, isLoading, isError, error } = useGetAnimeSearchQuery(
-    { q, sort, orderBy, limit, page },
-    { skip: !q || !sort || !orderBy }
+    getAnimeSearchApiArg,
+    {
+      skip:
+        !getAnimeSearchApiArg.q ||
+        !getAnimeSearchApiArg.sort ||
+        !getAnimeSearchApiArg.orderBy ||
+        !getAnimeSearchApiArg.page,
+    }
   );
 
   if (isLoading) {
@@ -48,32 +48,27 @@ const SearchPage = () => {
   return (
     <div className="grid gap-4">
       <div className="flex justify-center">
-        <SearchAnimeForm getAnimeSearchApiArg={{ q, sort, orderBy }} />
+        <SearchAnimeForm getAnimeSearchApiArg={getAnimeSearchApiArg} />
       </div>
-
-      <BentoGrid className="mx-auto md:auto-rows-[20rem]">
-        {data.data?.map((anime) => (
-          <Link key={anime.mal_id} href={`anime/${anime.mal_id}`}>
-            <BentoGridItem
-              key={anime.mal_id}
-              title={trim(anime.title, 50)}
-              description={trim(anime.synopsis, 150)}
-              header={
-                <div className="flex flex-1 w-full h-full min-h-[6rem] max-h-[10rem] rounded-xl justify-center">
-                  <img
-                    src={
-                      anime.images?.jpg?.large_image_url ||
-                      "https://placehold.co/200x200.png"
-                    }
-                    alt="placeholder"
-                    className="overflow-hidden object-cover"
-                  />
-                </div>
-              }
-            />
-          </Link>
-        ))}
-      </BentoGrid>
+      <div>
+        <AnimeBentoGrid data={data.data} />
+      </div>
+      {data.pagination && (
+        <div>
+          <PaginationAnimeSearch
+            paginationPlus={data}
+            getAnimeSearchApiArg={getAnimeSearchApiArg}
+          />
+        </div>
+      )}
+      {/*       <div>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Praesentium,
+          nobis non eos eveniet, sequi officia accusantium eaque dolore,
+          suscipit velit corrupti quis quidem dolorum fugiat ducimus iusto
+          explicabo tempora reprehenderit.
+        </p>
+      </div> */}
     </div>
   );
 };

@@ -1,7 +1,6 @@
 "use client";
 
 import { useForm } from "react-hook-form";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,11 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import {
-  AnimeSearchQueryOrderby,
-  GetAnimeSearchApiArg,
-  SearchQuerySort,
-} from "../../../generated/rtk-query/jikanApi";
+import { GetAnimeSearchApiArg } from "../../../generated/rtk-query/jikanApi";
 import {
   Select,
   SelectContent,
