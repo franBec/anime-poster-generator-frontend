@@ -3,7 +3,11 @@
 import { SearchAnimeForm } from "@/components/animePosterGenerator/searchAnimeForm";
 import { useSearchParams } from "next/navigation";
 import React from "react";
-import { useGetAnimeSearchQuery } from "../../../generated/rtk-query/jikanApi";
+import {
+  AnimeSearchQueryOrderby,
+  SearchQuerySort,
+  useGetAnimeSearchQuery,
+} from "../../../generated/rtk-query/jikanApi";
 import Loading from "@/components/animePosterGenerator/layout/loading";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 import Link from "next/link";
@@ -21,9 +25,12 @@ const SearchPage = () => {
 
   const searchParams = useSearchParams();
   const q = searchParams.get("q") || "";
+  const sort = (searchParams.get("sort") || "desc") as SearchQuerySort;
+  const orderBy = (searchParams.get("orderBy") ||
+    "score") as AnimeSearchQueryOrderby;
 
   const { data, isLoading, isError, error } = useGetAnimeSearchQuery(
-    { q },
+    { q, sort, orderBy },
     { skip: !q }
   );
 
@@ -39,8 +46,11 @@ const SearchPage = () => {
 
   return (
     <div className="grid gap-4">
-      <SearchAnimeForm getAnimeSearchApiArg={{ q }} />
-      <BentoGrid className=" mx-auto md:auto-rows-[20rem]">
+      <div className="flex justify-center">
+        <SearchAnimeForm getAnimeSearchApiArg={{ q, sort, orderBy }} />
+      </div>
+
+      <BentoGrid className="mx-auto md:auto-rows-[20rem]">
         {data.data?.map((anime) => (
           <Link key={anime.mal_id} href={`anime/${anime.mal_id}`}>
             <BentoGridItem
@@ -52,7 +62,7 @@ const SearchPage = () => {
                   <img
                     src={
                       anime.images?.jpg?.large_image_url ||
-                      "https://placehold.co/600x400.png"
+                      "https://placehold.co/200x200.png"
                     }
                     alt="placeholder"
                     className="overflow-hidden object-cover"
