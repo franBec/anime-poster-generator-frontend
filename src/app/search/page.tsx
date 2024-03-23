@@ -50,25 +50,13 @@ const SearchPage = () => {
       <div className="flex justify-center">
         <SearchAnimeForm getAnimeSearchApiArg={getAnimeSearchApiArg} />
       </div>
-      <div>
-        <AnimeBentoGrid data={data.data} />
-      </div>
+      <AnimeBentoGrid data={data.data} />
       {data.pagination && (
-        <div>
-          <PaginationAnimeSearch
-            paginationPlus={data}
-            getAnimeSearchApiArg={getAnimeSearchApiArg}
-          />
-        </div>
+        <PaginationAnimeSearch
+          paginationPlus={data}
+          getAnimeSearchApiArg={getAnimeSearchApiArg}
+        />
       )}
-      {/*       <div>
-        <p>
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Praesentium,
-          nobis non eos eveniet, sequi officia accusantium eaque dolore,
-          suscipit velit corrupti quis quidem dolorum fugiat ducimus iusto
-          explicabo tempora reprehenderit.
-        </p>
-      </div> */}
     </div>
   );
 };
