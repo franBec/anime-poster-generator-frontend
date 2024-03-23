@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { useGetRandomAnimeQuery } from "../../../generated/rtk-query/jikanApi";
 
 const Random = () => {

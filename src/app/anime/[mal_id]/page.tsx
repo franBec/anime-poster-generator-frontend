@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import React from "react";
 import { useGetAnimeFullByIdQuery } from "../../../../generated/rtk-query/jikanApi";
 import Loading from "@/components/animePosterGenerator/layout/loading";
 import { AlertDestructive } from "@/components/animePosterGenerator/layout/alertDestructive";

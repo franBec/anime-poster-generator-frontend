@@ -2,7 +2,6 @@
 
 import { SearchAnimeForm } from "@/components/animePosterGenerator/searchAnimeForm";
 import { useSearchParams } from "next/navigation";
-import React from "react";
 import {
   AnimeSearchQueryOrderby,
   SearchQuerySort,
@@ -28,10 +27,12 @@ const SearchPage = () => {
   const sort = (searchParams.get("sort") || "desc") as SearchQuerySort;
   const orderBy = (searchParams.get("orderBy") ||
     "score") as AnimeSearchQueryOrderby;
+  const limit = 9;
+  const page = Number(searchParams.get("page")) || 1;
 
   const { data, isLoading, isError, error } = useGetAnimeSearchQuery(
-    { q, sort, orderBy },
-    { skip: !q }
+    { q, sort, orderBy, limit, page },
+    { skip: !q || !sort || !orderBy }
   );
 
   if (isLoading) {
@@ -58,7 +59,7 @@ const SearchPage = () => {
               title={trim(anime.title, 50)}
               description={trim(anime.synopsis, 150)}
               header={
-                <div className="flex flex-1 w-full h-full min-h-[6rem] max-h-[11rem] rounded-xl justify-center">
+                <div className="flex flex-1 w-full h-full min-h-[6rem] max-h-[10rem] rounded-xl justify-center">
                   <img
                     src={
                       anime.images?.jpg?.large_image_url ||

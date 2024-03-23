@@ -39,14 +39,6 @@ export function SearchAnimeForm({
   function onSubmit(values: GetAnimeSearchApiArg) {
     const queryParams: string[] = [];
 
-    if (values.orderBy === undefined) {
-      values.orderBy =
-        animeSearchQueryOrderbyValues[5] as AnimeSearchQueryOrderby;
-    }
-    if (values.sort === undefined) {
-      values.sort = searchQuerySortValues[0] as SearchQuerySort;
-    }
-
     for (const [key, value] of Object.entries(values)) {
       if (value !== undefined) {
         queryParams.push(
