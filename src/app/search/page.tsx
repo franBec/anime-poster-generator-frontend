@@ -1,6 +1,6 @@
 "use client";
 
-import { SearchAnimeForm } from "@/components/animePosterGenerator/searchAnimeForm";
+import { SearchAnimeForm } from "@/components/animePosterGenerator/search/searchAnimeForm";
 import { useSearchParams } from "next/navigation";
 import {
   AnimeSearchQueryOrderby,

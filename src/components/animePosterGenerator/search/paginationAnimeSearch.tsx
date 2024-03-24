@@ -22,8 +22,6 @@ const PaginationAnimeSearch = ({
     return <AlertDestructive alertDescription="No pagination available" />;
   }
 
-  const pageCount = Math.ceil(itemsLength / itemsPerPage);
-
   const handlePageClick = (event: { selected: number }) => {
     getAnimeSearchApiArg.page = event.selected + 1;
 
@@ -43,12 +41,16 @@ const PaginationAnimeSearch = ({
   return (
     <ReactPaginate
       breakLabel="..."
-      nextLabel="next >"
+      nextLabel="Next >"
       onPageChange={handlePageClick}
-      pageRangeDisplayed={5}
-      pageCount={pageCount}
-      previousLabel="< previous"
-      renderOnZeroPageCount={null}
+      pageCount={Math.ceil(itemsLength / itemsPerPage)}
+      previousLabel="< Previous"
+      containerClassName="mx-auto flex w-full justify-center flex-row items-center gap-1"
+      previousClassName="flex items-center justify-center px-3 h-8 leading-tight rounded hover:bg-primary hover:text-secondary dark:hover:bg-primary dark:hover:text-white pl-2.5"
+      nextClassName="flex items-center justify-center px-3 h-8 leading-tight rounded hover:bg-primary hover:text-secondary dark:hover:bg-primary dark:hover:text-white pr-2.5"
+      breakClassName="flex h-9 w-9 items-center justify-center"
+      pageClassName="flex items-center justify-center px-3 h-8 leading-tight rounded hover:bg-primary hover:text-secondary dark:hover:bg-primary dark:hover:text-white"
+      activeClassName="flex items-center justify-center px-3 h-8 leading-tight border rounded hover:bg-primary hover:text-secondary dark:hover:bg-primary dark:hover:text-white"
     />
   );
 };

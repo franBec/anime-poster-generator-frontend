@@ -1,4 +1,4 @@
-import { SearchAnimeForm } from "@/components/animePosterGenerator/searchAnimeForm";
+import { SearchAnimeForm } from "@/components/animePosterGenerator/search/searchAnimeForm";
 
 export default function Home() {
   return (

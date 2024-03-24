@@ -11,14 +11,36 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
-import { GetAnimeSearchApiArg } from "../../../generated/rtk-query/jikanApi";
+import {
+  AnimeSearchQueryOrderby,
+  GetAnimeSearchApiArg,
+  SearchQuerySort,
+} from "../../../../generated/rtk-query/jikanApi";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "../../ui/select";
+
+const searchQuerySortValues: SearchQuerySort[] = ["desc", "asc"];
+const animeSearchQueryOrderbyValues: AnimeSearchQueryOrderby[] = [
+  "mal_id",
+  "title",
+  "start_date",
+  "end_date",
+  "episodes",
+  "score",
+  "scored_by",
+  "rank",
+  "popularity",
+  "members",
+  "favorites",
+];
+
+const DEFAULT_searchQuerySortValues = searchQuerySortValues[0];
+const DEFAULT_animeSearchQueryOrderbyValues = animeSearchQueryOrderbyValues[5];
 
 export function SearchAnimeForm({
   getAnimeSearchApiArg,
@@ -32,6 +54,13 @@ export function SearchAnimeForm({
   const router = useRouter();
 
   function onSubmit(values: GetAnimeSearchApiArg) {
+    if (values.sort === undefined) {
+      values.sort = DEFAULT_searchQuerySortValues;
+    }
+    if (values.orderBy === undefined) {
+      values.orderBy = DEFAULT_animeSearchQueryOrderbyValues;
+    }
+
     const queryParams: string[] = [];
 
     for (const [key, value] of Object.entries(values)) {
@@ -45,22 +74,6 @@ export function SearchAnimeForm({
     const queryString = queryParams.join("&");
     router.push(queryString ? `/search?${queryString}` : "/search");
   }
-
-  const searchQuerySortValues = ["desc", "asc"];
-
-  const animeSearchQueryOrderbyValues = [
-    "mal_id",
-    "title",
-    "start_date",
-    "end_date",
-    "episodes",
-    "score",
-    "scored_by",
-    "rank",
-    "popularity",
-    "members",
-    "favorites",
-  ];
 
   return (
     <Form {...form}>
@@ -106,7 +119,7 @@ export function SearchAnimeForm({
                     <Select
                       onValueChange={field.onChange}
                       defaultValue={
-                        field.value || animeSearchQueryOrderbyValues[5]
+                        field.value || DEFAULT_animeSearchQueryOrderbyValues
                       }
                     >
                       <FormControl>
@@ -141,7 +154,9 @@ export function SearchAnimeForm({
                   <div>
                     <Select
                       onValueChange={field.onChange}
-                      defaultValue={field.value || searchQuerySortValues[0]}
+                      defaultValue={
+                        field.value || DEFAULT_searchQuerySortValues
+                      }
                     >
                       <FormControl>
                         <SelectTrigger>
