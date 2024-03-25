@@ -1,6 +1,10 @@
 "use client";
 
-import { SearchAnimeForm } from "@/components/animePosterGenerator/search/searchAnimeForm";
+import {
+  DEFAULT_animeSearchQueryOrderbyValues,
+  DEFAULT_searchQuerySortValues,
+  SearchAnimeForm,
+} from "@/components/animePosterGenerator/search/searchAnimeForm";
 import { useSearchParams } from "next/navigation";
 import {
   AnimeSearchQueryOrderby,
@@ -17,9 +21,10 @@ const SearchPage = () => {
 
   const getAnimeSearchApiArg = {
     q: searchParams.get("q") || "",
-    sort: (searchParams.get("sort") || "desc") as SearchQuerySort,
+    sort: (searchParams.get("sort") ||
+      DEFAULT_searchQuerySortValues) as SearchQuerySort,
     orderBy: (searchParams.get("orderBy") ||
-      "score") as AnimeSearchQueryOrderby,
+      DEFAULT_animeSearchQueryOrderbyValues) as AnimeSearchQueryOrderby,
     limit: 9,
     page: Number(searchParams.get("page")) || 1,
   };

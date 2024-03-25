@@ -39,8 +39,9 @@ const animeSearchQueryOrderbyValues: AnimeSearchQueryOrderby[] = [
   "favorites",
 ];
 
-const DEFAULT_searchQuerySortValues = searchQuerySortValues[0];
-const DEFAULT_animeSearchQueryOrderbyValues = animeSearchQueryOrderbyValues[5];
+export const DEFAULT_searchQuerySortValues = searchQuerySortValues[0];
+export const DEFAULT_animeSearchQueryOrderbyValues =
+  animeSearchQueryOrderbyValues[5];
 
 export function SearchAnimeForm({
   getAnimeSearchApiArg,
