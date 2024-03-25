@@ -2,7 +2,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { PosterContent } from "../../../../../generated/rtk-query/animePosterGeneratorBackendApi";
 import { useMakePosterAsBlobMutation } from "@/clients/animePosterGeneratorBackendClient";
 import { Form } from "@/components/ui/form";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
